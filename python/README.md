@@ -26,10 +26,19 @@ pip install -e .
 ### 3. Using Conda
 
 ```bash
-# Create a conda environment
+# Create a conda environment with Python dependencies
 conda env create -f environment.yml
 conda activate pycudbscan
+
+# Now you can use the package directly
 ```
+
+This environment includes:
+- Python 3.9
+- pybind11
+- NumPy
+- CMake and CUDA toolkit
+- Development tools (pytest, JupyterLab)
 
 ## Directory Structure
 

@@ -1,14 +1,14 @@
-package com.cudbscan;
+package com.jcudbscan;
 
 /**
  * Java wrapper for CUDA DBSCAN implementation.
  */
-public class CUDBSCANJava {
+public class JCUDBSCANJava {
     
     // Load the native library
     static {
         try {
-            System.loadLibrary("cudbscan_java");
+            System.loadLibrary("jcudbscan_java");
         } catch (UnsatisfiedLinkError e) {
             System.err.println("Native code library failed to load: " + e);
             System.exit(1);
@@ -34,7 +34,7 @@ public class CUDBSCANJava {
      * Simple example usage of the CUDA functions.
      */
     public static void main(String[] args) {
-        CUDBSCANJava cuda = new CUDBSCANJava();
+        JCUDBSCANJava cuda = new JCUDBSCANJava();
         
         // Check if CUDA is available
         boolean cudaAvailable = cuda.checkCudaAvailable();

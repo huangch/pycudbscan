@@ -2,6 +2,22 @@
 
 This directory contains the Java bindings for the CUDA DBSCAN implementation.
 
+## Environment Setup
+
+You can set up a development environment using Conda:
+
+```bash
+# Create a conda environment with Java dependencies
+conda env create -f environment.yml
+conda activate jcudbscan
+```
+
+This environment includes:
+- OpenJDK 11+
+- Gradle
+- CMake and CUDA toolkit
+- Build tools (Ninja, Make)
+
 ## Building
 
 The Java bindings can be built in two ways:

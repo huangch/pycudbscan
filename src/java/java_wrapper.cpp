@@ -9,13 +9,13 @@ extern "C" {
 
 // JNI wrapper for checking CUDA availability
 extern "C" JNIEXPORT jboolean JNICALL
-Java_com_cudbscan_CUDBSCANJava_checkCudaAvailable(JNIEnv* env, jobject obj) {
+Java_com_jcudbscan_JCUDBSCANJava_checkCudaAvailable(JNIEnv* env, jobject obj) {
     return check_cuda_available();
 }
 
 // JNI wrapper for the dummy CUDA function
 extern "C" JNIEXPORT jfloatArray JNICALL
-Java_com_cudbscan_CUDBSCANJava_cudaDummyFunction(JNIEnv* env, jobject obj, jfloatArray input) {
+Java_com_jcudbscan_JCUDBSCANJava_cudaDummyFunction(JNIEnv* env, jobject obj, jfloatArray input) {
     // Get the input array
     jsize length = env->GetArrayLength(input);
     jfloat* inputData = env->GetFloatArrayElements(input, NULL);

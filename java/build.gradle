@@ -3,7 +3,7 @@ plugins {
     id 'application'
 }
 
-group = 'com.cudbscan'
+group = 'com.jcudbscan'
 version = '0.1.0'
 
 repositories {
@@ -15,7 +15,7 @@ dependencies {
 }
 
 application {
-    mainClass = 'com.cudbscan.CUDBSCANJava'
+    mainClass = 'com.jcudbscan.JCUDBSCANJava'
 }
 
 java {
@@ -35,7 +35,7 @@ run {
 jar {
     manifest {
         attributes(
-            'Main-Class': 'com.cudbscan.CUDBSCANJava',
+            'Main-Class': 'com.jcudbscan.JCUDBSCANJava',
             'Class-Path': configurations.runtimeClasspath.collect { it.getName() }.join(' ')
         )
     }

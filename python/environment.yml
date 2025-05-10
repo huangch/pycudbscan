@@ -4,11 +4,20 @@ channels:
   - nvidia
   - defaults
 dependencies:
+  # Core dependencies
   - python=3.9
-  - pybind11
-  - numpy
   - cmake>=3.18
   - cuda-toolkit
+  - ninja  # Faster build system alternative for CMake
+  
+  # Python-specific dependencies
+  - pybind11>=2.9.0
+  - numpy
+  - pytest  # For testing
+  
+  # Development tools
+  - git
+  - jupyterlab  # For prototyping
   - pip
   - pip:
-    - -e .
+    - -e .  # Install the package in development mode

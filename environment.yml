@@ -1,0 +1,13 @@
+name: pycudbscan
+channels:
+  - conda-forge
+  - nvidia
+  - defaults
+dependencies:
+  # Core dependencies
+  - python=3.9
+  - cmake>=3.18
+  - cuda-toolkit
+  - ninja  # Faster build system alternative for CMake
+  
+  # Python-specific dep

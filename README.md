@@ -46,6 +46,33 @@ cudbscan/
         └── java_wrapper.cpp   # JNI wrapper for Java
 ```
 
+## Environment Setup
+
+The project provides three different Conda environment files:
+
+1. **Complete Environment** (root directory):
+   ```bash
+   conda env create -f environment.yml
+   conda activate cudbscan
+   ```
+   This includes all dependencies for both Python and Java development.
+
+2. **Python Environment** (python directory):
+   ```bash
+   conda env create -f python/environment.yml
+   conda activate pycudbscan
+   ```
+   This includes only Python-related dependencies.
+
+3. **Java Environment** (java directory):
+   ```bash
+   conda env create -f java/environment.yml
+   conda activate jcudbscan
+   ```
+   This includes only Java-related dependencies.
+
+Choose the appropriate environment based on which parts of the project you need to work with.
+
 ## Building and Installation
 
 ### Using CMake (Recommended)
@@ -84,26 +111,6 @@ cmake -DBUILD_PYTHON_BINDINGS=OFF ..
 
 # Don't build examples
 cmake -DBUILD_EXAMPLES=OFF ..
-```
-
-### Using Conda (Python only)
-
-```bash
-# Create a new conda environment
-conda create -n pycudbscan python=3.9
-conda activate pycudbscan
-
-# Install required packages
-conda install -c conda-forge pybind11 numpy cmake
-conda install -c nvidia cuda-toolkit
-
-# Clone the repository
-git clone https://github.com/yourusername/cudbscan.git
-cd cudbscan
-
-# Build and install the Python package
-cd python
-pip install -e .
 ```
 
 ### Using Gradle (Java only)
