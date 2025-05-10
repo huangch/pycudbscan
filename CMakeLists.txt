@@ -20,6 +20,7 @@ include_directories(${CUDA_INCLUDE_DIRS})
 
 # Python bindings
 if(BUILD_PYTHON_BINDINGS)
+  # Find pybind11 package
   find_package(pybind11 REQUIRED)
   
   # Set up the Python module
@@ -63,21 +64,21 @@ if(BUILD_JAVA_BINDINGS)
     include_directories(${JNI_INCLUDE_DIRS})
     
     # Create the JNI library
-    add_library(cudbscan_java SHARED
+    add_library(jcudbscan_java SHARED
       src/cuda/main.cu
       src/java/java_wrapper.cpp
     )
     
     # Link libraries for JNI
-    target_link_libraries(cudbscan_java PRIVATE ${CUDA_LIBRARIES} ${JNI_LIBRARIES})
+    target_link_libraries(jcudbscan_java PRIVATE ${CUDA_LIBRARIES} ${JNI_LIBRARIES})
     
     # Set output directory for Java library
-    set_target_properties(cudbscan_java PROPERTIES
+    set_target_properties(jcudbscan_java PROPERTIES
       LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/java/lib
     )
     
     # Install target for Java
-    install(TARGETS cudbscan_java
+    install(TARGETS jcudbscan_java
       LIBRARY DESTINATION java/lib
     )
     
@@ -89,7 +90,7 @@ if(BUILD_JAVA_BINDINGS)
       
       # Set up Java compilation
       set(JAVA_SOURCE_FILES 
-        ${CMAKE_SOURCE_DIR}/java/com/cudbscan/CUDBSCANJava.java
+        ${CMAKE_SOURCE_DIR}/java/com/jcudbscan/JCUDBSCANJava.java
       )
       
       set(CMAKE_JAVA_COMPILE_FLAGS -d ${CMAKE_SOURCE_DIR}/java/build/classes)
@@ -99,12 +100,12 @@ if(BUILD_JAVA_BINDINGS)
         COMMAND ${Java_JAVAC_EXECUTABLE} ${CMAKE_JAVA_COMPILE_FLAGS} ${JAVA_SOURCE_FILES}
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         COMMENT "Compiling Java classes"
-        DEPENDS cudbscan_java
+        DEPENDS jcudbscan_java
       )
       
       # Create JAR file
       add_custom_target(java_jar
-        COMMAND ${Java_JAR_EXECUTABLE} cf ${CMAKE_SOURCE_DIR}/java/build/cudbscan.jar -C ${CMAKE_SOURCE_DIR}/java/build/classes .
+        COMMAND ${Java_JAR_EXECUTABLE} cf ${CMAKE_SOURCE_DIR}/java/build/jcudbscan.jar -C ${CMAKE_SOURCE_DIR}/java/build/classes .
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         COMMENT "Creating JAR file"
         DEPENDS java_compile
@@ -135,11 +136,11 @@ if(BUILD_EXAMPLES)
   if(BUILD_JAVA_BINDINGS AND Java_FOUND)
     # Java example
     add_custom_target(run_java_example
-      COMMAND ${Java_JAVAC_EXECUTABLE} -cp ${CMAKE_SOURCE_DIR}/java/build/cudbscan.jar 
+      COMMAND ${Java_JAVAC_EXECUTABLE} -cp ${CMAKE_SOURCE_DIR}/java/build/jcudbscan.jar 
               -d ${CMAKE_SOURCE_DIR}/examples/java/classes 
               ${CMAKE_SOURCE_DIR}/examples/java/ExampleJava.java
       COMMAND ${Java_JAVA_EXECUTABLE} -Djava.library.path=${CMAKE_SOURCE_DIR}/java/lib 
-              -cp ${CMAKE_SOURCE_DIR}/java/build/cudbscan.jar:${CMAKE_SOURCE_DIR}/examples/java/classes 
+              -cp ${CMAKE_SOURCE_DIR}/java/build/jcudbscan.jar:${CMAKE_SOURCE_DIR}/examples/java/classes 
               ExampleJava
       WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
       COMMENT "Running Java example"
