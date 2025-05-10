@@ -1,0 +1,16 @@
+name: pycudbscan
+channels:
+  - conda-forge
+  - nvidia
+  - defaults
+dependencies:
+  - python=3.9
+  - pip
+  - numpy
+  - scikit-learn
+  - matplotlib
+  - pybind11
+  - cmake
+  - cuda-toolkit
+  - pip:
+    - -e .  # Install the package in development mode

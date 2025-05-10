@@ -1,0 +1,61 @@
+cmake_minimum_required(VERSION 3.18 FATAL_ERROR)
+project(pycudbscan LANGUAGES CXX CUDA)
+
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Find CUDA
+find_package(CUDA REQUIRED)
+message(STATUS "Found CUDA ${CUDA_VERSION_STRING} at ${CUDA_TOOLKIT_ROOT_DIR}")
+
+# Add CUDA compilation flags
+set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS};-std=c++14;-O3;-arch=sm_35)
+
+# Find pybind11
+find_package(pybind11 REQUIRED)
+message(STATUS "Found pybind11 v${pybind11_VERSION}")
+
+# Include directories
+include_directories(
+    ${CUDA_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+# Source files
+set(SOURCES
+    pycudbscan.cpp
+)
+
+# Add pybind11 module
+pybind11_add_module(pycudbscan ${SOURCES})
+
+# Set CUDA properties for the target
+set_target_properties(pycudbscan PROPERTIES
+    CUDA_SEPARABLE_COMPILATION ON
+)
+
+# Link libraries
+target_link_libraries(pycudbscan PRIVATE
+    ${CUDA_LIBRARIES}
+    ${CUDA_CUBLAS_LIBRARIES}
+)
+
+# Platform-specific configurations
+if(UNIX AND NOT APPLE)
+    # Linux specific settings
+    target_compile_definitions(pycudbscan PRIVATE LINUX_BUILD)
+elseif(APPLE)
+    # macOS specific settings
+    target_compile_definitions(pycudbscan PRIVATE MACOS_BUILD)
+    # macOS may need explicit CUDA path
+    if(EXISTS "/usr/local/cuda")
+        include_directories("/usr/local/cuda/include")
+    endif()
+elseif(WIN32)
+    # Windows specific settings
+    target_compile_definitions(pycudbscan PRIVATE WIN32_BUILD)
+endif()
+
+# Installation
+install(TARGETS pycudbscan DESTINATION .)
