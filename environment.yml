@@ -5,12 +5,10 @@ channels:
   - defaults
 dependencies:
   - python=3.9
-  - pip
-  - numpy
-  - scikit-learn
-  - matplotlib
   - pybind11
-  - cmake
+  - numpy
+  - cmake>=3.18
   - cuda-toolkit
+  - pip
   - pip:
-    - -e .  # Install the package in development mode
+    - -e .
