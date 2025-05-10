@@ -1,6 +1,3 @@
-13. **examples/python/example.py** (Python example):
-
-```python
 import numpy as np
 import time
 from pycudbscan import check_cuda_available, cuda_dummy_function

@@ -9,7 +9,7 @@ __global__ void dummy_kernel(float* input, float* output, int size) {
     }
 }
 
-// C-style function that will be exposed to Python and Java
+// C-style function that will be exposed to Python
 extern "C" {
     // Simple function to check if CUDA is available
     bool check_cuda_available() {

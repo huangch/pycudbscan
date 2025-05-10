@@ -1,28 +1,14 @@
-name: cudbscan
+name: pycudbscan
 channels:
   - conda-forge
   - nvidia
   - defaults
 dependencies:
-  # Core dependencies
   - python=3.9
+  - pybind11
+  - numpy
   - cmake>=3.18
   - cuda-toolkit
-  - ninja  # Faster build system alternative for CMake
-  - make   # GNU Make for Unix-like platforms
-  
-  # Python dependencies
-  - pybind11>=2.9.0
-  - numpy
-  - pytest  # For testing
-  
-  # Java dependencies
-  - openjdk>=11
-  - gradle  # Build tool for Java
-  
-  # Development tools
-  - git
-  - jupyterlab  # For prototyping
   - pip
   - pip:
-    - -e python/  # Install the Python package in development mode
+    - -e .

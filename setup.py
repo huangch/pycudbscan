@@ -28,8 +28,7 @@ class CMakeBuild(build_ext):
             
         cmake_args = [
             '-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=' + extdir,
-            '-DPYTHON_EXECUTABLE=' + sys.executable,
-            '-DBUILD_JAVA_BINDINGS=OFF'  # Only build Python for pip install
+            '-DPYTHON_EXECUTABLE=' + sys.executable
         ]
         
         cfg = 'Debug' if self.debug else 'Release'
@@ -46,8 +45,7 @@ class CMakeBuild(build_ext):
         if not os.path.exists(self.build_temp):
             os.makedirs(self.build_temp)
             
-        # Run cmake on the parent directory (project root)
-        subprocess.check_call(['cmake', os.path.join(self.sourcedir, '..')] + cmake_args, 
+        subprocess.check_call(['cmake', ext.sourcedir] + cmake_args, 
                               cwd=self.build_temp, env=env)
         subprocess.check_call(['cmake', '--build', '.'] + build_args, 
                               cwd=self.build_temp)
@@ -57,10 +55,10 @@ setup(
     version='0.1.0',
     author='Your Name',
     author_email='your.email@example.com',
-    description='Python bindings for GPU-accelerated DBSCAN clustering using CUDA',
-    long_description=open(os.path.join(os.path.dirname(__file__), '..', 'README.md')).read(),
+    description='A Python library for GPU-accelerated DBSCAN clustering using CUDA',
+    long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url='https://github.com/yourusername/cudbscan',
+    url='https://github.com/yourusername/pycudbscan',
     packages=find_packages(),
     ext_modules=[CMakeExtension('pycudbscan_core')],
     cmdclass=dict(build_ext=CMakeBuild),

@@ -1,0 +1,9 @@
+README.md
+setup.py
+pycudbscan/__init__.py
+pycudbscan.egg-info/PKG-INFO
+pycudbscan.egg-info/SOURCES.txt
+pycudbscan.egg-info/dependency_links.txt
+pycudbscan.egg-info/not-zip-safe
+pycudbscan.egg-info/requires.txt
+pycudbscan.egg-info/top_level.txt
