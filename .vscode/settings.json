@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "__split_buffer": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "vector": "cpp",
+        "list": "cpp",
+        "fstream": "cpp"
+    }
+}

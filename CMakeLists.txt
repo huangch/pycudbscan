@@ -20,6 +20,8 @@ include_directories(${CUDA_INCLUDE_DIRS})
 pybind11_add_module(pycudbscan_core
   src/pybind_wrapper.cpp
   src/main.cu
+  src/dbscan.cu
+  src/indexing.cu
 )
 
 # Link libraries
