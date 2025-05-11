@@ -16,11 +16,10 @@
 #include <set>
 #include <vector>
 
+
 #include "common.h"
 #include "indexing.h"
 #include "dbscan.h"
-
-int DATASET_COUNT;
 
 using namespace std;
 
@@ -34,11 +33,8 @@ using namespace std;
 **************************************************************************
 */
 // int main(int argc, char **argv) {
-int dclustplus(double *importedDataset, //
-               int *d_cluster, int *runningCluster, int *clusterCount, int *noiseCount, // Output
-               int dataset_count // Parameters
-              ) {
-  DATASET_COUNT = dataset_count;
+int dclustplus(double *importedDataset, int dataset_count, int dimension) {
+
   // *.**
   // char inputFname[500];
   // if (argc != 2) {
