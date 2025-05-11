@@ -19,6 +19,7 @@
 #include <vector>
 
 #include "common.h"
+#include "indexing.h"
 #include "dbscan.h"
 
 bool MonitorSeedPoints(vector<int> &unprocessedPoints, int *runningCluster,

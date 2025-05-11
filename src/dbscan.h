@@ -22,9 +22,4 @@ __global__ void DBSCAN(double *dataset, int *cluster, int *seedList,
                        int *indexesStack, int *dataValue, double *upperBounds,
                        double *binWidth, double *minPoints, double *maxPoints);
 
-__device__ void searchPoints(double *data, int chainID, double *dataset,
-                             int *results,
-                             struct IndexStructure **indexBuckets,
-                             int *indexesStack, int *dataValue,
-                             double *upperBounds, double *binWidth, double *minPoints, double *maxPoints);
 #endif
