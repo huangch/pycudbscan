@@ -17,7 +17,7 @@ struct Graph {
   int totalEdges;
 };
 
-void makeGraph(int NUM_BLOCKS, int BLOCK_THREADS, float *dataPts,
+void makeGraph(int NUM_BLOCKS, int BLOCK_THREADS, const float *dataPts,
                int numPoints, int minPts, float R, Graph *distGraph,
                bool **clusterType);
 

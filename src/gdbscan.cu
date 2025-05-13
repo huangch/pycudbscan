@@ -10,11 +10,11 @@
 // int MIN_POINTS;
 // int BLOCK_THREADS;
 // int NUM_BLOCKS;
-#define BLOCK_THREADS 256
+// #define BLOCK_THREADS 256
 
-void G_DBSCAN(float *h_data,int **clusterIDs, bool **clusterType, int * numClusters,
+void G_DBSCAN(const float *h_data,int **clusterIDs, bool **clusterType, int * numClusters,
 			  int numPoints, int dataDim, int minPts, float R){
-				
+
 	int NUM_BLOCKS = (numPoints/BLOCK_THREADS) +1;
 
 	//Initialize cluster set

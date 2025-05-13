@@ -1,5 +1,7 @@
 #include <cuda_runtime.h>
 #include <stdio.h>
+#include "gdbscan.h"
+
 // Structure to hold optimal CUDA launch parameters
 typedef struct {
    int threadsPerBlock;     // Optimal threads per block
@@ -147,20 +149,31 @@ extern "C" {
        int* core_samples,
        int& n_clusters
    ) {
-       // Make sure CUDA is initialized
-       if (!g_cudaInitialized && !cuda_init()) {
-           return false;
-       }
-       // Your DBSCAN implementation goes here
-       // This is just a placeholder that sets all points to cluster 1
-       // Replace with your actual implementation
-       n_clusters = 1;
-       for (int i = 0; i < n_samples; i++) {
-           labels[i] = 1;
-           core_samples[i] = 1;
-       }
-       return true;
-   }
+        // Make sure CUDA is initialized
+        if (!g_cudaInitialized && !cuda_init()) {
+            return false;
+        }
+        // Your DBSCAN implementation goes here
+        // This is just a placeholder that sets all points to cluster 1
+        // Replace with your actual implementation
+        //    n_clusters = 1;
+        //    for (int i = 0; i < n_samples; i++) {
+        //        labels[i] = 1;
+        //        core_samples[i] = 1;
+        //    }
+
+        int *clusterIDs = (int*)malloc(sizeof(int)*n_samples);
+        bool *clusterType = (bool*)malloc(sizeof(bool)*n_samples);
+        int numClusters;
+
+        G_DBSCAN(input_data, 
+                &clusterIDs, &clusterType, &numClusters,
+                n_samples, n_features, min_samples, eps);
+                
+        free(clusterIDs);
+        free(clusterType);
+        return true;
+    }
 }
 
 // #include <cuda_runtime.h>

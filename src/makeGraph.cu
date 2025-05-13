@@ -1,6 +1,6 @@
 #include "makeGraph.h"
 
-void makeGraph(int NUM_BLOCKS, int BLOCK_THREADS,float *dataPts, int numPoints, int dataDim, int minPts, float R, Graph* distGraph, bool** clusterType){
+void makeGraph(int NUM_BLOCKS, int BLOCK_THREADS, const float *dataPts, int numPoints, int dataDim, int minPts, float R, Graph* distGraph, bool** clusterType){
 
     //Initialize memory for all the arrays
 	long unsigned int *dNodes;
