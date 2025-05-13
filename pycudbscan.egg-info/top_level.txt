@@ -1,0 +1,2 @@
+pycudbscan
+pycudbscan_core
