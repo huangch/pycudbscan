@@ -5,6 +5,9 @@
         "string": "cpp",
         "vector": "cpp",
         "list": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "random": "cpp",
+        "array": "cpp",
+        "string_view": "cpp"
     }
 }
