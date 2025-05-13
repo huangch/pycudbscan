@@ -1,7 +1,7 @@
 #include "breadthFirstSearch.h"
 
 
-void identifyCluster(int NUM_NODES, int NUM_BLOCKS, int BLOCK_THREADS, long unsigned int* Va, int* Ea, int** clusterIDs, bool** clusterType, int* numClusters){
+void identifyCluster(int NUM_NODES, int NUM_BLOCKS, int BLOCK_THREADS, long unsigned int* Va, int* Ea, int** clusterIDs, int** clusterType, int* numClusters){
 	//Set the first cluster ID
 	int thisClusterID = Not_Visited+1;
 
@@ -31,7 +31,7 @@ void identifyCluster(int NUM_NODES, int NUM_BLOCKS, int BLOCK_THREADS, long unsi
 	cudaFree(Ea);
 }
 
-void BreadthFirstSearch(int NUM_NODES, int NUM_BLOCKS, int BLOCK_THREADS, int source, long unsigned int* Va, int* Ea, int* clusterIDs, bool* clusterType, int thisClusterID)
+void BreadthFirstSearch(int NUM_NODES, int NUM_BLOCKS, int BLOCK_THREADS, int source, long unsigned int* Va, int* Ea, int* clusterIDs, int* clusterType, int thisClusterID)
 {
 	//Initialize frontiers and visited arrays
 	bool *frontier = (bool*)malloc(sizeof(bool)*NUM_NODES);
@@ -56,9 +56,9 @@ void BreadthFirstSearch(int NUM_NODES, int NUM_BLOCKS, int BLOCK_THREADS, int so
 	int* Ca;
 	cudaMalloc((void**)&Ca, sizeof(int)*NUM_NODES);
 	cudaMemcpy(Ca, cost, sizeof(int)*NUM_NODES, cudaMemcpyHostToDevice);
-	bool* dClusterType;
-	cudaMalloc((void**)&dClusterType, sizeof(bool)*NUM_NODES);
-	cudaMemcpy(dClusterType, clusterType, sizeof(bool)*NUM_NODES, cudaMemcpyHostToDevice);
+	int* dClusterType;
+	cudaMalloc((void**)&dClusterType, sizeof(int)*NUM_NODES);
+	cudaMemcpy(dClusterType, clusterType, sizeof(int)*NUM_NODES, cudaMemcpyHostToDevice);
 	bool done;
 	bool* d_done;
 	cudaMalloc((void**)&d_done, sizeof(bool));
@@ -111,7 +111,7 @@ void BreadthFirstSearch(int NUM_NODES, int NUM_BLOCKS, int BLOCK_THREADS, int so
 
 
 
-__global__ void BreadthFirstSearchKernel(int NUM_NODES, long unsigned  *Va, int *Ea, bool *Fa, bool *Xa, int *Ca,bool *dClusterType, bool *done)
+__global__ void BreadthFirstSearchKernel(int NUM_NODES, long unsigned  *Va, int *Ea, bool *Fa, bool *Xa, int *Ca, int *dClusterType, bool *done)
 {
 
 	for (int id = blockIdx.x * blockDim.x + threadIdx.x;

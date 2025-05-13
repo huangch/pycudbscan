@@ -19,10 +19,10 @@ struct Graph {
 
 void makeGraph(int NUM_BLOCKS, int BLOCK_THREADS, const float *dataPts,
                int numPoints, int minPts, float R, Graph *distGraph,
-               bool **clusterType);
+               int **clusterType);
 
 __global__ void fillNodes(int minPts, float R, int numPoints, int dataDim, float *d_dataPts, 
-                          long unsigned int *dNodes, bool *dClusterType);
+                          long unsigned int *dNodes, int *dClusterType);
 
 __global__ void fillEdges(int numPoints, int dataDim, float R, float *d_dataPts,
                           long unsigned int *dNodes, int *dEdges);

@@ -1,21 +1,21 @@
 #include "makeGraph.h"
 
-void makeGraph(int NUM_BLOCKS, int BLOCK_THREADS, const float *dataPts, int numPoints, int dataDim, int minPts, float R, Graph* distGraph, bool** clusterType){
+void makeGraph(int NUM_BLOCKS, int BLOCK_THREADS, const float *dataPts, int numPoints, int dataDim, int minPts, float R, Graph* distGraph, int** clusterType){
 
     //Initialize memory for all the arrays
 	long unsigned int *dNodes;
 	int  *dEdges;
-    bool *dClusterType;
+    int *dClusterType;
     float *d_dataPts;
 
     //hAdjMatrix = (bool*) malloc(sizeof(bool)*(numPoints*numPoints));
     gpuErrchk(cudaMalloc((void**)&dNodes, sizeof(long unsigned int) * (numPoints +1)));
     gpuErrchk(cudaMalloc((void**)&d_dataPts, sizeof(float) * numPoints * dataDim));
-    gpuErrchk(cudaMalloc((void**)&dClusterType, sizeof(bool) * numPoints));
+    gpuErrchk(cudaMalloc((void**)&dClusterType, sizeof(int) * numPoints));
 
     //Copy stuff into the device
     gpuErrchk(cudaMemcpy(d_dataPts, dataPts, sizeof(float) * numPoints * dataDim, cudaMemcpyHostToDevice));
-    gpuErrchk(cudaMemcpy(dClusterType, *clusterType, sizeof(bool) * numPoints, cudaMemcpyHostToDevice));
+    gpuErrchk(cudaMemcpy(dClusterType, *clusterType, sizeof(int) * numPoints, cudaMemcpyHostToDevice));
 
     //Make Adjacency Matrix of all points within radius of all points
     dim3 dimGrid(NUM_BLOCKS,1);
@@ -23,7 +23,7 @@ void makeGraph(int NUM_BLOCKS, int BLOCK_THREADS, const float *dataPts, int numP
     fillNodes<<<dimGrid,dimBlock>>>(minPts, R, numPoints, dataDim, d_dataPts, dNodes, dClusterType);
 
     //Get back the info on invididual points (Core or Border)
-	gpuErrchk(cudaMemcpy(*clusterType, dClusterType, sizeof(bool) * numPoints, cudaMemcpyDeviceToHost));
+	gpuErrchk(cudaMemcpy(*clusterType, dClusterType, sizeof(int) * numPoints, cudaMemcpyDeviceToHost));
     cudaFree(dClusterType);
 
     //Prints for debugging and monitoring
@@ -89,7 +89,7 @@ void makeGraph(int NUM_BLOCKS, int BLOCK_THREADS, const float *dataPts, int numP
 }
 
 __global__ void fillNodes(int minPts, float R, int numPoints, int dataDim, float *d_dataPts,
-                          long unsigned int *dNodes, bool*dClusterType){
+                          long unsigned int *dNodes, int*dClusterType){
     //Grid Stride Loop
     for (int tID = blockIdx.x * blockDim.x + threadIdx.x; 
          tID < numPoints;

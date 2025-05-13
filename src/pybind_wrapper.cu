@@ -162,16 +162,16 @@ extern "C" {
         //        core_samples[i] = 1;
         //    }
 
-        int *clusterIDs = (int*)malloc(sizeof(int)*n_samples);
-        bool *clusterType = (bool*)malloc(sizeof(bool)*n_samples);
+        // int *clusterIDs = (int*)malloc(sizeof(int)*n_samples); // this is equlipvant to labels
+        // int *clusterType = (int*)malloc(sizeof(int)*n_samples);
         int numClusters;
 
         G_DBSCAN(input_data, 
-                &clusterIDs, &clusterType, &numClusters,
+                &labels, &core_samples, &numClusters,
                 n_samples, n_features, min_samples, eps, g_launchParams.threadsPerBlock);
                 
-        free(clusterIDs);
-        free(clusterType);
+        // free(clusterIDs);
+        // free(clusterType);
         return true;
     }
 }
