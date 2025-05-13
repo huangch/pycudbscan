@@ -168,7 +168,7 @@ extern "C" {
 
         G_DBSCAN(input_data, 
                 &clusterIDs, &clusterType, &numClusters,
-                n_samples, n_features, min_samples, eps);
+                n_samples, n_features, min_samples, eps, g_launchParams.threadsPerBlock);
                 
         free(clusterIDs);
         free(clusterType);
